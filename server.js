@@ -221,6 +221,15 @@ async function checkAll() {
 const server = http.createServer((req, res) => {
   const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
 
+  // Always open, even with ACCESS_TOKEN set - Render's health check
+  // and any keep-alive pinger hit this, not the dashboard, so they
+  // shouldn't need the token.
+  if (url.pathname === '/healthz') {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('ok');
+    return;
+  }
+
   if (!isAuthorized(req, url)) {
     res.writeHead(401, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ ok: false, error: 'unauthorized' }));

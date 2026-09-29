@@ -1,0 +1,15 @@
+{
+  "name": "crypto-vault",
+  "version": "1.0.0",
+  "description": "Watch-only multi-chain balance monitor with email alerts and a live dashboard",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.14"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

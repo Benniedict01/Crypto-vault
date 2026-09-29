@@ -77,27 +77,37 @@ than JSON-RPC.
 Add the coin's id to `COINGECKO_IDS` in `server.js` to get its USD
 price on the dashboard.
 
-## Deploying it publicly
+## Deploying it publicly (Render, free tier)
 
-To get a real link (not just `localhost`), deploy `server.js` to a
-host that runs a persistent Node process — Railway or Render both
-fit well (unlike Vercel/Netlify, which run serverless functions and
-won't keep `checkAll()`'s interval loop alive). Either way:
+`render.yaml` is a Blueprint - Render reads it and provisions
+everything in one go.
 
-1. Attach a persistent volume/disk and set `DATA_DIR` to its mount
-   path, so `state.json`/`push-tokens.json` survive restarts.
-2. Set these as environment variables (all optional if the matching
-   field is already in `config.json`, but secrets shouldn't be):
-   `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_TO`,
-   and optionally `VAULT_ADDRESSES` (a JSON array, same shape as
-   `config.json`'s `addresses`) if you'd rather not commit even that.
-3. Set `ACCESS_TOKEN` to a long random string. Once set, every route
-   requires it — `https://your-app.example.com/?token=...` for the
-   dashboard, and an `X-Vault-Token` header for the API — so a
-   stranger who finds the URL can't see your balances or register
-   themselves for your push alerts. Leave it unset for local use;
-   nothing is gated then, same as before.
-4. `PORT` is provided by the host automatically — no need to set it.
+1. Push this project to a GitHub repo (`render.yaml` at the repo
+   root - if you're keeping `crypto-vault-mobile` too, put it in a
+   separate repo, not a subfolder of this one).
+2. Render dashboard → **New +** → **Blueprint** → connect that repo.
+   It finds `render.yaml` and prompts you for the env vars marked
+   `sync: false`: `SMTP_HOST`, `SMTP_PORT` (465), `SMTP_USER`,
+   `SMTP_PASSWORD`, `SMTP_TO`, and optionally `VAULT_ADDRESSES` (a
+   JSON array, same shape as `config.json`'s `addresses`, if you'd
+   rather not commit that file at all) and `ACCESS_TOKEN` (a long
+   random string - strongly recommended, see below).
+3. Deploy. You get `https://crypto-vault-xxxx.onrender.com`.
+4. **Free tier spins down after 15 min idle**, which pauses the
+   background checks too - not just slow, actually paused. Point a
+   free pinger (e.g. [UptimeRobot](https://uptimerobot.com), 5-min
+   interval) at `https://your-url.onrender.com/healthz` to keep it
+   awake. That path is exempt from `ACCESS_TOKEN` on purpose, so the
+   pinger doesn't need one.
+5. **Free tier has no persistent disk** - `state.json` resets on
+   redeploy or a Render-initiated restart, so a real deposit landing
+   right at that moment could be missed once (no false alerts
+   either way - it just re-baselines). Fine for personal use;
+   `plan: starter` ($7/mo in `render.yaml`) removes both this and
+   the spin-down.
+6. Visit `https://your-url.onrender.com/?token=...` for the
+   dashboard, and enter that URL + token in the mobile app's
+   Settings.
 
 ## Mobile app
 

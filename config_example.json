@@ -1,0 +1,17 @@
+{
+  "addresses": [
+    { "label": "Main ETH wallet", "chain": "ethereum", "address": "0xYourEthereumAddressHere" },
+    { "label": "Main SOL wallet", "chain": "solana", "address": "YourSolanaAddressHere" },
+    { "label": "Main BTC wallet", "chain": "bitcoin", "address": "YourBitcoinAddressHere" }
+  ],
+  "email": {
+    "smtpHost": "smtp.gmail.com",
+    "smtpPort": 465,
+    "smtpUser": "you@gmail.com",
+    "smtpPassword": "your-app-password",
+    "toAddress": "you@gmail.com"
+  },
+  "checkIntervalSeconds": 300,
+  "minimumNotifyAmount": 0,
+  "port": 3000
+}
