@@ -1,0 +1,43 @@
+# Render Blueprint - https://render.com/docs/blueprint-spec
+#
+# Deploys crypto-vault as a Free web service. Free tier has two
+# real limits worth knowing before you rely on this - see the
+# README's "Deploying it publicly" section:
+#   1. Spins down after 15 min with no inbound traffic, which pauses
+#      the background balance checks too. Workaround: an external
+#      pinger (e.g. UptimeRobot, free) hitting /healthz every 5-10
+#      min keeps it awake.
+#   2. No persistent disk on Free - state.json/push-tokens.json
+#      reset on redeploy or a Render-initiated restart. Balance
+#      detection just re-baselines after that; no false alerts, but
+#      a real deposit right around a reset could be missed once.
+# Upgrading `plan` to `starter` removes both (always-on + a disk you
+# can add), for $7/mo.
+
+services:
+  - type: web
+    name: crypto-vault
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        sync: false
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASSWORD
+        sync: false
+      - key: SMTP_TO
+        sync: false
+      - key: VAULT_ADDRESSES
+        sync: false
+      - key: ACCESS_TOKEN
+        sync: false
+      - key: CHECK_INTERVAL_SECONDS
+        value: 300
+      - key: MIN_NOTIFY_AMOUNT
+        value: 0

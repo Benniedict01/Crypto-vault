@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Crypto Vault</title>
+<style>
+  :root { color-scheme: dark; }
+  body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #0f1115; color: #e6e6e6; padding: 2rem; max-width: 900px; margin: 0 auto; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { text-align: left; padding: 0.6rem 1rem; border-bottom: 1px solid #2a2d35; }
+  th { color: #9aa0ab; font-weight: 600; font-size: 0.85em; text-transform: uppercase; }
+  .addr { font-family: ui-monospace, monospace; color: #9aa0ab; font-size: 0.85em; }
+  .total { font-size: 1.5rem; margin-top: 1.5rem; }
+  .updated { color: #6b7280; font-size: 0.85em; margin-top: 2rem; }
+  .empty { color: #6b7280; padding: 1rem 0; }
+</style>
+</head>
+<body>
+  <h1>Crypto Vault</h1>
+  <table>
+    <thead><tr><th>Label</th><th>Chain</th><th>Address</th><th>Balance</th><th>USD</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+  <div class="total" id="total"></div>
+  <div class="updated" id="updated">Loading…</div>
+
+<script>
+function fmtUsd(n) {
+  return '$' + n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+async function refresh() {
+  const token = new URLSearchParams(window.location.search).get('token');
+  const apiUrl = token ? `/api/balances?token=${encodeURIComponent(token)}` : '/api/balances';
+  const res = await fetch(apiUrl);
+  if (res.status === 401) {
+    document.getElementById('updated').textContent = 'Unauthorized - open this page with ?token=... in the URL.';
+    return;
+  }
+  const { entries, updatedAt } = await res.json();
+  const rows = document.getElementById('rows');
+
+  if (!entries.length) {
+    rows.innerHTML = '<tr><td colspan="5" class="empty">No addresses checked yet - see config.json</td></tr>';
+  } else {
+    rows.innerHTML = entries.map((e) => `
+      <tr>
+        <td>${e.label}</td>
+        <td>${e.chain}</td>
+        <td class="addr">${e.address}</td>
+        <td>${e.amount.toFixed(6)} ${e.symbol}</td>
+        <td>${fmtUsd(e.usdValue)}</td>
+      </tr>
+    `).join('');
+  }
+
+  const total = entries.reduce((sum, e) => sum + e.usdValue, 0);
+  document.getElementById('total').textContent = `Total: ${fmtUsd(total)}`;
+  document.getElementById('updated').textContent = updatedAt
+    ? `Last updated: ${new Date(updatedAt).toLocaleString()}`
+    : 'Waiting for first check…';
+}
+
+refresh();
+setInterval(refresh, 15000);
+</script>
+</body>
+</html>
