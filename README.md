@@ -55,59 +55,46 @@ For something more permanent than a terminal window, run
 
 ## Chains today
 
-- **Ethereum** — plain JSON-RPC against a public node, no signup
-- **Solana** — public JSON-RPC
-- **Bitcoin** — Blockstream's public Esplora API (sums confirmed UTXOs)
+The watch-only monitor supports native-balance tracking on the following networks out of the box:
 
-## Adding chains
+- Ethereum
+- Base
+- Arbitrum One
+- Optimism
+- Polygon
+- BNB Smart Chain
+- Avalanche C-Chain
+- Gnosis
+- Fantom
+- Linea
+- Scroll
+- zkSync Era
+- Mantle
+- Celo
+- Cronos
+- opBNB
+- Moonbeam
+- Moonriver
+- Metis
+- Blast
+- Mode
+- Taiko
+- Sei EVM
+- Berachain
+- Ink
+- Sonic
+- Solana
+- Bitcoin
 
-Another EVM chain (Polygon, Base, Arbitrum, ...) needs zero new
-code — reuse the `ethereum` adapter with overrides:
+For EVM networks, the same `0x...` public address can be monitored on multiple chains because the address format is shared; balances remain chain-specific. Solana and Bitcoin require their own native addresses.
 
-```json
-{ "label": "Polygon wallet", "chain": "ethereum", "address": "0x...",
-  "rpcUrl": "https://polygon-rpc.com", "symbol": "MATIC", "chainName": "polygon" }
-```
+### Adding another EVM chain
 
-Anything else: add a function to `chains.js` returning
-`{ chain, symbol, amount }`, and register it in `ADAPTERS`. Copy
-`btcBalance` as a starting point if the chain is REST-based rather
-than JSON-RPC.
+No new balance algorithm is required. Add the network to `EVM_CHAINS` in `chains.js` with its public RPC URL, native symbol, and chain name.
 
-Add the coin's id to `COINGECKO_IDS` in `server.js` to get its USD
-price on the dashboard.
+### Adding a non-EVM chain
 
-## Deploying it publicly (Render, free tier)
-
-`render.yaml` is a Blueprint - Render reads it and provisions
-everything in one go.
-
-1. Push this project to a GitHub repo (`render.yaml` at the repo
-   root - if you're keeping `crypto-vault-mobile` too, put it in a
-   separate repo, not a subfolder of this one).
-2. Render dashboard → **New +** → **Blueprint** → connect that repo.
-   It finds `render.yaml` and prompts you for the env vars marked
-   `sync: false`: `SMTP_HOST`, `SMTP_PORT` (465), `SMTP_USER`,
-   `SMTP_PASSWORD`, `SMTP_TO`, and optionally `VAULT_ADDRESSES` (a
-   JSON array, same shape as `config.json`'s `addresses`, if you'd
-   rather not commit that file at all) and `ACCESS_TOKEN` (a long
-   random string - strongly recommended, see below).
-3. Deploy. You get `https://crypto-vault-xxxx.onrender.com`.
-4. **Free tier spins down after 15 min idle**, which pauses the
-   background checks too - not just slow, actually paused. Point a
-   free pinger (e.g. [UptimeRobot](https://uptimerobot.com), 5-min
-   interval) at `https://your-url.onrender.com/healthz` to keep it
-   awake. That path is exempt from `ACCESS_TOKEN` on purpose, so the
-   pinger doesn't need one.
-5. **Free tier has no persistent disk** - `state.json` resets on
-   redeploy or a Render-initiated restart, so a real deposit landing
-   right at that moment could be missed once (no false alerts
-   either way - it just re-baselines). Fine for personal use;
-   `plan: starter` ($7/mo in `render.yaml`) removes both this and
-   the spin-down.
-6. Visit `https://your-url.onrender.com/?token=...` for the
-   dashboard, and enter that URL + token in the mobile app's
-   Settings.
+Add a dedicated adapter to `chains.js` and register it in `ADAPTERS`. The adapter should return `{ chain, symbol, amount }`. Add the asset's CoinGecko ID to `COINGECKO_IDS` in `server.js` if USD pricing is desired.
 
 ## Mobile app
 

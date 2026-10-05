@@ -1,8 +1,145 @@
 {
   "addresses": [
-    { "label": "Main ETH wallet", "chain": "ethereum", "address": "0xYourEthereumAddressHere" },
-    { "label": "Main SOL wallet", "chain": "solana", "address": "YourSolanaAddressHere" },
-    { "label": "Main BTC wallet", "chain": "bitcoin", "address": "YourBitcoinAddressHere" }
+    {
+      "label": "Ethereum",
+      "chain": "ethereum",
+      "address": "0xe358ce497Fea9e135040a9122051928B43aB9E5f"
+    },
+    {
+      "label": "Base",
+      "chain": "base",
+      "address": "0xe358ce497Fea9e135040a9122051928B43aB9E5f"
+    },
+    {
+      "label": "Arbitrum One",
+      "chain": "arbitrum",
+      "address": "0xe358ce497Fea9e135040a9122051928B43aB9E5f"
+    },
+    {
+      "label": "Optimism",
+      "chain": "optimism",
+      "address": "0xe358ce497Fea9e135040a9122051928B43aB9E5f"
+    },
+    {
+      "label": "Polygon",
+      "chain": "polygon",
+      "address": "0xe358ce497Fea9e135040a9122051928B43aB9E5f"
+    },
+    {
+      "label": "BNB Smart Chain",
+      "chain": "bsc",
+      "address": "0xe358ce497Fea9e135040a9122051928B43aB9E5f"
+    },
+    {
+      "label": "Avalanche C-Chain",
+      "chain": "avalanche",
+      "address": "0xe358ce497Fea9e135040a9122051928B43aB9E5f"
+    },
+    {
+      "label": "Gnosis",
+      "chain": "gnosis",
+      "address": "0xe358ce497Fea9e135040a9122051928B43aB9E5f"
+    },
+    {
+      "label": "Fantom",
+      "chain": "fantom",
+      "address": "0xe358ce497Fea9e135040a9122051928B43aB9E5f"
+    },
+    {
+      "label": "Linea",
+      "chain": "linea",
+      "address": "0xe358ce497Fea9e135040a9122051928B43aB9E5f"
+    },
+    {
+      "label": "Scroll",
+      "chain": "scroll",
+      "address": "0xe358ce497Fea9e135040a9122051928B43aB9E5f"
+    },
+    {
+      "label": "zkSync Era",
+      "chain": "zksync",
+      "address": "0xe358ce497Fea9e135040a9122051928B43aB9E5f"
+    },
+    {
+      "label": "Mantle",
+      "chain": "mantle",
+      "address": "0xe358ce497Fea9e135040a9122051928B43aB9E5f"
+    },
+    {
+      "label": "Celo",
+      "chain": "celo",
+      "address": "0xe358ce497Fea9e135040a9122051928B43aB9E5f"
+    },
+    {
+      "label": "Cronos",
+      "chain": "cronos",
+      "address": "0xe358ce497Fea9e135040a9122051928B43aB9E5f"
+    },
+    {
+      "label": "opBNB",
+      "chain": "opbnb",
+      "address": "0xe358ce497Fea9e135040a9122051928B43aB9E5f"
+    },
+    {
+      "label": "Moonbeam",
+      "chain": "moonbeam",
+      "address": "0xe358ce497Fea9e135040a9122051928B43aB9E5f"
+    },
+    {
+      "label": "Moonriver",
+      "chain": "moonriver",
+      "address": "0xe358ce497Fea9e135040a9122051928B43aB9E5f"
+    },
+    {
+      "label": "Metis",
+      "chain": "metis",
+      "address": "0xe358ce497Fea9e135040a9122051928B43aB9E5f"
+    },
+    {
+      "label": "Blast",
+      "chain": "blast",
+      "address": "0xe358ce497Fea9e135040a9122051928B43aB9E5f"
+    },
+    {
+      "label": "Mode",
+      "chain": "mode",
+      "address": "0xe358ce497Fea9e135040a9122051928B43aB9E5f"
+    },
+    {
+      "label": "Taiko",
+      "chain": "taiko",
+      "address": "0xe358ce497Fea9e135040a9122051928B43aB9E5f"
+    },
+    {
+      "label": "Sei EVM",
+      "chain": "sei_evm",
+      "address": "0xe358ce497Fea9e135040a9122051928B43aB9E5f"
+    },
+    {
+      "label": "Berachain",
+      "chain": "berachain",
+      "address": "0xe358ce497Fea9e135040a9122051928B43aB9E5f"
+    },
+    {
+      "label": "Ink",
+      "chain": "ink",
+      "address": "0xe358ce497Fea9e135040a9122051928B43aB9E5f"
+    },
+    {
+      "label": "Sonic",
+      "chain": "sonic",
+      "address": "0xe358ce497Fea9e135040a9122051928B43aB9E5f"
+    },
+    {
+      "label": "Solana",
+      "chain": "solana",
+      "address": "9ZWxhePW36FoqrXPjLehr3qi6BvFbGuzCQ5CSSZwMbHV"
+    },
+    {
+      "label": "Bitcoin",
+      "chain": "bitcoin",
+      "address": "bc1qnnwes6cphg7rxyxf8ls5z3avwsrhd6rghsz0gc"
+    }
   ],
   "email": {
     "smtpHost": "smtp.gmail.com",

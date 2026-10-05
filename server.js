@@ -128,7 +128,12 @@ function looksLikeSecret(value) {
   return false;
 }
 
-const COINGECKO_IDS = { ETH: 'ethereum', SOL: 'solana', BTC: 'bitcoin' };
+const COINGECKO_IDS = {
+  ETH: 'ethereum', SOL: 'solana', BTC: 'bitcoin', POL: 'matic-network', AVAX: 'avalanche-2',
+  BNB: 'binancecoin', xDAI: 'xdai', FTM: 'fantom', MNT: 'mantle', CELO: 'celo', CRO: 'crypto-com-chain',
+  GLMR: 'moonbeam', MOVR: 'moonriver', METIS: 'metis-token', MNT: 'mantle', SEI: 'sei-network',
+  BERA: 'berachain-bera', S: 'sonic-3',
+};
 
 async function getUsdPrices(symbols) {
   const ids = [...new Set(symbols.map((s) => COINGECKO_IDS[s]).filter(Boolean))];
